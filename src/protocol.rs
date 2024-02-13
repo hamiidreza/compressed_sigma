@@ -2,13 +2,12 @@
 
 //! Implementation of protocol 5 in https://eprint.iacr.org/2020/152.pdf
 
-
-use ark_ec::{AffineRepr, VariableBaseMSM, CurveGroup};
+use ark_ec::{AffineRepr, CurveGroup, VariableBaseMSM};
 use ark_ff::PrimeField;
 use ark_std::ops::Add;
 use digest::Digest;
 
-use crate::{relation::LinearForm, error::SigmaError};
+use crate::{error::SigmaError, relation::LinearForm};
 
 pub struct FirstMessage<G: AffineRepr> {
     pub r: Vec<G::ScalarField>,
@@ -32,13 +31,13 @@ impl<G: AffineRepr> FirstMessage<G> {
         rho: G::ScalarField,
         blindings: Vec<G::ScalarField>,
     ) -> Result<Self, SigmaError> {
-        if !(g.len() + 1).is_power_of_two(){
+        if !(g.len() + 1).is_power_of_two() {
             return Err(SigmaError::NotPowerOfTwo);
-        } 
-        if blindings.len() != g.len(){
+        }
+        if blindings.len() != g.len() {
             return Err(SigmaError::VectorLenMismatch);
         }
-        if !linear_form.size().is_power_of_two(){
+        if !linear_form.size().is_power_of_two() {
             return Err(SigmaError::NotPowerOfTwo);
         }
         let t = linear_form.eval(&blindings);
@@ -59,17 +58,17 @@ impl<G: AffineRepr> FirstMessage<G> {
         wit_x: &[G::ScalarField],
         wit_gamma: &G::ScalarField,
     ) -> Result<Response<G>, SigmaError> {
-        if !(g.len() +1).is_power_of_two(){
+        if !(g.len() + 1).is_power_of_two() {
             return Err(SigmaError::NotPowerOfTwo);
         }
-        if !linear_form.size().is_power_of_two(){
+        if !linear_form.size().is_power_of_two() {
             return Err(SigmaError::NotPowerOfTwo);
         }
-        if !(g.len() != wit_x.len()){
-            return Err(SigmaError::VectorLenMismatch)
+        if g.len() != wit_x.len() {
+            return Err(SigmaError::VectorLenMismatch);
         }
-        if !(g.len() + 1 != linear_form.size()){
-            return Err(SigmaError::VectorLenMismatch)
+        if g.len() + 1 != linear_form.size() {
+            return Err(SigmaError::VectorLenMismatch);
         }
 
         todo!()

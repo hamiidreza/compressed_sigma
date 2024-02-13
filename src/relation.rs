@@ -16,4 +16,3 @@ pub trait LinearForm<F: Field>: Sized {
 
     fn pad(&self, new_size: u32) -> Self;
 }
-
