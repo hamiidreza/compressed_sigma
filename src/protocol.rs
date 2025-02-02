@@ -69,11 +69,11 @@ impl<G: AffineRepr> Witness<G> {
             transcript.challenge_bytes(b"c0", &mut buf);
             G::ScalarField::from_le_bytes_mod_order(&buf)
         };
-        let c1: G::ScalarField = {
-            let mut buf = Vec::new();
-            transcript.challenge_bytes(b"c1", &mut buf);
-            G::ScalarField::from_le_bytes_mod_order(&buf)
-        };
+        // let c1: G::ScalarField = {
+        //     let mut buf = Vec::new();
+        //     transcript.challenge_bytes(b"c1", &mut buf);
+        //     G::ScalarField::from_le_bytes_mod_order(&buf)
+        // };
 
         let z_temp: Vec<G::ScalarField> = self.x.iter().map(|v| c0 * v).collect();
         let z: Vec<G::ScalarField> = z_temp
